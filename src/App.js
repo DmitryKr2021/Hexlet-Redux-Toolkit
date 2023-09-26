@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  decrement,
+  increment,
+  incrementByAmount,
+} from "./slices/counterSlice.js";
 
-function App() {
+const App = () => {
+  // Вытаскиваем данные из хранилища. state — все состояние
+  const count = useSelector((state) => state.counter.value);
+  // Возвращает метод store.dispatch() текущего хранилища
+  const dispatch = useDispatch();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <div>
+        <button
+          aria-label="Increment value"
+          onClick={() => dispatch(increment())}
         >
-          Learn React
-        </a>
-      </header>
+          Прибавить
+        </button>
+        <span>{count}</span>
+        <button
+          aria-label="Decrement value"
+          onClick={() => dispatch(decrement())}
+        >
+          Отнять
+        </button>
+        <br />
+        <button onClick={() => dispatch(incrementByAmount(42))}>
+          Прибавить 42
+        </button>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
